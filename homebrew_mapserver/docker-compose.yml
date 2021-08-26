@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  mapserver:
+    image: mapserver:latest
+    build:
+      context: ./
+      dockerfile: uwsgi-Dockerfile
+    container_name: maps
+    environment:
+      NUM_PROCESSES: 8
+    volumes: 
+      - 'D:\tiles:/data'
+    ports: 
+      - '80:80'

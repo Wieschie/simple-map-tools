@@ -1,0 +1,13 @@
+FROM alpine:latest
+RUN apk add --no-cache python3 uwsgi uwsgi-python3 cmd:pip3
+
+WORKDIR /app
+COPY ./leaflet ./leaflet
+COPY ./requirements.txt ./requirements.txt
+RUN pip3 install -r /app/requirements.txt
+COPY ./uwsgi.ini ./uwsgi.ini
+COPY ./server.py ./server.py
+COPY ./map.html ./map.html
+
+ENV NUM_PROCESSES 4
+ENTRYPOINT ["uwsgi", "--ini", "uwsgi.ini"]
